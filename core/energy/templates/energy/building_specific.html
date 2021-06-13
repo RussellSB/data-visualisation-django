@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Building Instance
+{% endblock title %}
+
+{% block content %}
+<table class="ui celled table">
+  <thead><tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td data-label="ID">{{building.id}}</td>
+      <td data-label="Name">{{building.name}}</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock content %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Meter Datatable
+Meter Instance
 {% endblock title %}
 
 {% block content %}
@@ -13,7 +13,6 @@ Meter Datatable
     <th>Unit</th>
   </tr></thead>
   <tbody>
-    {% for meter in meter_list %}
     <tr>
       <td data-label="ID">{{meter.id}}</td>
       <td data-label="Building ID">
@@ -24,7 +23,6 @@ Meter Datatable
       <td data-label="Fuel">{{meter.fuel}}</td>
       <td data-label="Unit">{{meter.unit}}</td>
     </tr>
-    {% endfor %}
   </tbody>
 </table>
 {% endblock content %}

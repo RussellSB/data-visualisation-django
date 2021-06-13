@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Halfhourly Datatable
+{% endblock title %}
+
+{% block content %}
+<table class="ui celled table">
+  <thead><tr>
+    <th>ID</th>
+    <th>Consumption</th>
+    <th>Meter ID</th>
+    <th>Reading Date Time</th>
+  </tr></thead>
+  <tbody>
+    {% for halfhourly in halfhourly_list %}
+    <tr>
+      <td data-label="ID">{{halfhourly.id}}</td>
+      <td data-label="Consumption">{{halfhourly.consumption}}</td>
+      <td data-label="Meter ID">
+        <a href="{% url 'energy:meter_specific' halfhourly.meter_id.id%}">
+              {{halfhourly.meter_id.id}}
+        </a>
+      </td>
+      <td data-label="Reading Date Time">{{halfhourly.reading_date_time}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
