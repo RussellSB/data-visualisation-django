@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Building Datatable
+{% endblock title %}
+
+{% block content %}
+<table class="ui celled table">
+  <thead><tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr></thead>
+  <tbody>
+    {% for building in building_list %}
+    <tr>
+      <td data-label="ID">{{building.id}}</td>
+      <td data-label="Name">{{building.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
