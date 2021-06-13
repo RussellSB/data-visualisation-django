@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'insight',
     'csvs.apps.CsvsConfig',
     'energy.apps.EnergyConfig',
     'django.contrib.admin',

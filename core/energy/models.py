@@ -5,7 +5,7 @@ class Building(models.Model):
     name = models.CharField('the hotel building name', max_length=50)
 
     def __str__(self):
-        return self.id, self.name
+        return '{}, {}'.format(self.id,self.name)
 
 class Meter(models.Model):
     id = models.AutoField(primary_key=True)
@@ -14,7 +14,7 @@ class Meter(models.Model):
     unit = models.CharField('the unit of the fuel type', max_length=50)
 
     def __str__(self):
-        return self.id, self.fuel, self.unit
+        return '{}, {}, {}, {}'.format(self.id, self.building_id.id, self.fuel, self.unit)
 
 class Halfhourly(models.Model):
     meter_id = models.ForeignKey(Meter, on_delete=models.CASCADE)
@@ -23,5 +23,5 @@ class Halfhourly(models.Model):
 
     def __str__(self):
         date_time_str = self.reading_date_time.__str__()
-        return self.id, date_time_str, self.consumption
+        return '{}, {}, {}, {}'.format(self.id, self.meter_id.id, date_time_str, self.consumption)
 

@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('csvs/', include('csvs.urls')),
     path('energy/', include('energy.urls')),
+    path('insight/', include('insight.urls')),
     path('admin/', admin.site.urls),
 ]
 
