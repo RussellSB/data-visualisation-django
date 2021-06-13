@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Building(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField('the hotel building name', max_length=50)
@@ -13,6 +12,6 @@ class Meter(models.Model):
 
 class Halfhourly(models.Model):
     meter_id = models.ForeignKey(Meter, on_delete=models.CASCADE)
-    consumption = models.DecimalField('the fuel consumption within the past half hour')
+    consumption = models.DecimalField('the fuel consumption within the past half hour', max_digits=20, decimal_places=4)
     reading_date_time = models.DateTimeField('the end time of the half hour duration')
 
