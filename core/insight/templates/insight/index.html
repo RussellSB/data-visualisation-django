@@ -26,7 +26,7 @@
 
   <div class="row">
     <div class="col-md-6">
-      <canvas id="myChartline"></canvas>
+      <canvas id="hotelConsumption"></canvas>
     </div>
   </div>
   
@@ -39,7 +39,7 @@
       method: "GET",
       url: endpoint,
       success: function(body) {
-        drawLineGraph(body, 'myChartline');
+        drawHotelConsumption(body, 'hotelConsumption');
         console.log("drawing");
       },
       error: function(error_body) {
@@ -64,7 +64,7 @@
         return colors;
     }
   
-    function drawLineGraph(body, id) {
+    function drawHotelConsumption(body, id) {
         //let chartdata = body.chartdata.map(o => o)
         //console.log(chartdata)
         let ctx = document.getElementById(id).getContext('2d');
@@ -74,12 +74,12 @@
         
                 // The data for our dataset
                 data: {
-                    labels: body.labels,
+                    labels: body.hotel_cons_labels,
                     datasets: [{
-                        label: body.chartlegend,
+                        label: body.hotel_cons_legend,
                         borderColor: 'rgb(55, 99, 132)',
-                        data: body.chartdata,
-                        backgroundColor: getColorsRepeated(body.labels.length)
+                        data: body.hotel_cons_data,
+                        backgroundColor: getColorsRepeated(body.hotel_cons_labels.length)
                     }]
                 },
                 options: {

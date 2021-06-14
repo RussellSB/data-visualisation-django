@@ -47,7 +47,7 @@ def getTotalConsumption(unit_type):
     chartlegend = 'Total consumption per Hotel in 2018 ('+ unit_type +')'
     return labels, chartdata, chartlegend
 
-labels, chartdata, chartlegend = getTotalConsumption('kWh')  # Making it a constant so it doesnt need to be computed every time
+hotel_cons_labels, hotel_cons_data, hotel_cons_legend = getTotalConsumption('kWh')  # Making it a constant so it doesnt need to be computed every time a request is sent
    
 ## using rest_framework classes
 class ChartData(APIView):
@@ -58,8 +58,8 @@ class ChartData(APIView):
 
         # Preparing body to send to ChartJS
         body ={
-            'chartlegend': chartlegend,
-            'labels': labels,
-            'chartdata': chartdata
+            'hotel_cons_legend': hotel_cons_legend,
+            'hotel_cons_labels': hotel_cons_labels,
+            'hotel_cons_data': hotel_cons_data
         }
         return Response(body)
