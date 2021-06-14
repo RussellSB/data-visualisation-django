@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from energy.models import Building, Meter, Halfhourly
+from django.db.models import Sum, Q
 
 import time
    
@@ -24,10 +25,19 @@ def getTotalConsumption(unit_type):
     hotels = list(map(lambda o: o.name, Building.objects.all()))
     hotels = dict([(key, 0) for key in hotels])
 
-    # Summing consumption in total for objects in kWH
-    filtered = Halfhourly.objects.filter(meter_id__unit__contains=unit_type)
-    for h in filtered:
-        hotels[h.meter_id.building_id.name] += float(h.consumption)
+    for hotel in hotels:
+        #filtered = Halfhourly.objects.filter(meter_id__unit__contains=unit_type).filter(meter_id__building_id__name__contains=hotel)
+        ##summation = filtered.annotate(sum=Sum('consumption')).get('sum')
+        
+        out = Halfhourly.objects.aggregate(consumption__sum=Sum('consumption', filter=Q(meter_id__building_id__name__contains=hotel)))
+        out = float(out['consumption__sum'])
+        
+        hotels[hotel] = out
+
+    # # Summing consumption in total for objects in kWH
+    # filtered = Halfhourly.objects.filter(meter_id__unit__contains=unit_type)
+    # for h in filtered:
+    #     hotels[h.meter_id.building_id.name] += float(h.consumption)
 
     labels = list(hotels)
     chartdata = hotels.values()
