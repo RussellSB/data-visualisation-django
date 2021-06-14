@@ -28,6 +28,9 @@
     <div class="col-md-6">
       <canvas id="hotelConsumption"></canvas>
     </div>
+    <div class="col-md-6">
+      <canvas id="timeConsumption"></canvas>
+    </div>
   </div>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -39,8 +42,9 @@
       method: "GET",
       url: endpoint,
       success: function(body) {
-        drawHotelConsumption(body, 'hotelConsumption');
-        console.log("drawing");
+        drawHotelConsumption(body, 'hotelConsumption')
+        drawTimeConsumption(body, 'timeConsumption')
+        console.log("drawing")
       },
       error: function(error_body) {
         console.log(body);
@@ -65,8 +69,6 @@
     }
   
     function drawHotelConsumption(body, id) {
-        //let chartdata = body.chartdata.map(o => o)
-        //console.log(chartdata)
         let ctx = document.getElementById(id).getContext('2d');
         let chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -80,6 +82,49 @@
                         borderColor: 'rgb(55, 99, 132)',
                         data: body.hotel_cons_data,
                         backgroundColor: getColorsRepeated(body.hotel_cons_labels.length)
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                        display: true
+                        }],
+                        yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            userCallback: function(value, index, values) {
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+                                value = value.join(',');
+                                return value;
+                            }
+                        }
+                        }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return tooltipItem.yLabel.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                            }
+                        }
+                    }
+                }
+        })
+    }
+
+    function drawTimeConsumption(body, id) {
+        let ctx = document.getElementById(id).getContext('2d');
+        let chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+        
+                // The data for our dataset
+                data: {
+                    labels: body.time_cons_labels,
+                    datasets: [{
+                        label: body.time_cons_legend,
+                        borderColor: 'rgb(55, 99, 132)',
+                        data: body.time_cons_data,
                     }]
                 },
                 options: {
