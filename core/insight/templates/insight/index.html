@@ -47,12 +47,30 @@
       }
     })
   
+    function getColorsRepeated(length){
+        options = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ]
+
+        max = options.length
+        colors = []
+        for(i=0; i<length; i++){colors.push(options[i%max])}
+
+        return colors;
+    }
   
     function drawLineGraph(body, id) {
+        //let chartdata = body.chartdata.map(o => o)
+        //console.log(chartdata)
         let ctx = document.getElementById(id).getContext('2d');
         let chart = new Chart(ctx, {
                 // The type of chart we want to create
-                type: 'line',
+                type: 'bar',
         
                 // The data for our dataset
                 data: {
@@ -60,20 +78,21 @@
                     datasets: [{
                         label: body.chartlegend,
                         borderColor: 'rgb(55, 99, 132)',
-                        data: body.chartdata
+                        data: body.chartdata,
+                        backgroundColor: getColorsRepeated(body.labels.length)
                     }]
                 },
                 options: {
-                scales: {
-                    xAxes: [{
-                    display: true
-                    }],
-                    yAxes: [{
-                    ticks: {
-                        beginAtZero: false
+                    scales: {
+                        xAxes: [{
+                        display: true
+                        }],
+                        yAxes: [{
+                        ticks: {
+                            beginAtZero: false
+                        }
+                        }]
                     }
-                    }]
-                }
                 }
         })
     }

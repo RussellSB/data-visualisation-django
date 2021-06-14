@@ -21,13 +21,29 @@ class ChartData(APIView):
     def get(self, request, format = None):
         # Preparing data to visualise
         buildings = Building.objects.all()
-        labels = list(map(lambda o: o.name, buildings))
-        chartdata = list(map(lambda o: o.id, buildings))
+        meters = Meter.objects.all()
+        halfhourly = Halfhourly.objects.all()
+
+        # Making a dictionary for reference to hotel building names
+        hotels = list(map(lambda o: o.name, buildings))
+        hotels = dict([(key, 0) for key in hotels])
+
+        # Summing consumption in total for objects in kWH
+        for i, h in enumerate(halfhourly):
+            m = h.meter_id
+
+            if m.unit == 'kWh':
+                hotels[m.building_id.name] += float(h.consumption)
+
+            if i > 50: break
+
+        labels = list(hotels) #list(map(lambda o: o.name, buildings))
+        chartdata = hotels.values()
 
         # Preparing body to send to ChartJS
-        data ={
-            'chartlegend': 'my data',
+        body ={
+            'chartlegend': 'Consumption per Hotel',
             'labels': labels,
             'chartdata': chartdata
         }
-        return Response(data)
+        return Response(body)
