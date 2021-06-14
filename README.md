@@ -6,7 +6,7 @@ Consuming, storing and visualising data concerned with energy.
 CSV Form page:
 
 <p align="center">
-  <img width="300" height="200" src="https://github.com/RussellSB/data-visualisation-django/blob/main/images/csv-form.PNG">
+  <img width="180" height="140" src="https://github.com/RussellSB/data-visualisation-django/blob/main/images/csv-form.PNG">
 </p>
 
 Halfhourly datatable visualisation:
