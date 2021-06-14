@@ -19,12 +19,14 @@ class ChartData(APIView):
     permission_classes = []
    
     def get(self, request, format = None):
+        # Preparing data to visualise
         buildings = Building.objects.all()
-        labels = ['a', 'b', 'c'] #list(map(lambda o: o.name, buildings))
-        chartdata = [1,2,3] #list(map(lambda o: o.id, buildings))
+        labels = list(map(lambda o: o.name, buildings))
+        chartdata = list(map(lambda o: o.id, buildings))
 
+        # Preparing body to send to ChartJS
         data ={
-            'chartLabel': 'my data',
+            'chartlegend': 'my data',
             'labels': labels,
             'chartdata': chartdata
         }

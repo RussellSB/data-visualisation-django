@@ -38,20 +38,17 @@
     $.ajax({
       method: "GET",
       url: endpoint,
-      success: function(data) {
-        drawLineGraph(data, 'myChartline');
+      success: function(body) {
+        drawLineGraph(body, 'myChartline');
         console.log("drawing");
       },
-      error: function(error_data) {
-        console.log(error_data);
+      error: function(error_body) {
+        console.log(body);
       }
     })
   
   
-    function drawLineGraph(data, id) {
-        let labels = data.labels;
-        let chartLabel = data.chartLabel;
-        let chartdata = data.chartdata;
+    function drawLineGraph(body, id) {
         let ctx = document.getElementById(id).getContext('2d');
         let chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -59,11 +56,11 @@
         
                 // The data for our dataset
                 data: {
-                    labels: labels,
+                    labels: body.labels,
                     datasets: [{
-                        label: chartLabel,
+                        label: body.chartlegend,
                         borderColor: 'rgb(55, 99, 132)',
-                        data: chartdata
+                        data: body.chartdata
                     }]
                 },
                 options: {
