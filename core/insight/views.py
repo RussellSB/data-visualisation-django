@@ -19,20 +19,13 @@ class ChartData(APIView):
     permission_classes = []
    
     def get(self, request, format = None):
-        labels = [
-            'January',
-            'February', 
-            'March', 
-            'April', 
-            'May', 
-            'June', 
-            'July'
-            ]
-        chartLabel = "my data"
-        chartdata = [0, 10, 5, 2, 20, 30, 45]
+        buildings = Building.objects.all()
+        labels = ['a', 'b', 'c'] #list(map(lambda o: o.name, buildings))
+        chartdata = [1,2,3] #list(map(lambda o: o.id, buildings))
+
         data ={
-                     "labels":labels,
-                     "chartLabel":chartLabel,
-                     "chartdata":chartdata,
-             }
+            'chartLabel': 'my data',
+            'labels': labels,
+            'chartdata': chartdata
+        }
         return Response(data)
