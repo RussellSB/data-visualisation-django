@@ -89,9 +89,22 @@
                         }],
                         yAxes: [{
                         ticks: {
-                            beginAtZero: false
+                            beginAtZero: true,
+                            userCallback: function(value, index, values) {
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+                                value = value.join(',');
+                                return value;
+                            }
                         }
                         }]
+                    },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return tooltipItem.yLabel.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+                            }
+                        }
                     }
                 }
         })
