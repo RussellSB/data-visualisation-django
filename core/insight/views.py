@@ -24,15 +24,22 @@ def getTotalConsumption(unit_type):
     # Making a dictionary for reference to hotel building names
     hotels = list(map(lambda o: o.name, Building.objects.all()))
     hotels = dict([(key, 0) for key in hotels])
+    labels = []
 
     for hotel in hotels:        
+        # Compute consumption sum per hotel
         out = Halfhourly.objects.filter(meter_id__building_id__name__contains=hotel)\
                                 .filter(meter_id__unit__contains=unit_type)\
                                 .aggregate(Sum('consumption'))
         out = float(out['consumption__sum'])
         hotels[hotel] = out
 
-    labels = list(hotels)
+        # Remove brackets segment if present in string name
+        if '(' in hotel: 
+            labels.append(hotel.split('(')[0])
+        else: 
+            labels.append(hotel)
+
     chartdata = hotels.values()
 
     print(time.time() - start, 'seconds for computing total consumption per hotel')
